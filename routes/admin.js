@@ -1,9 +1,13 @@
 const express = require("express")
+const { render } = require("express/lib/response")
+const res = require("express/lib/response")
 //const { render } = require("express/lib/response")
 const router = express.Router()
 const mongoose = require("mongoose")
 require("../models/Categoria")
 const Categoria = mongoose.model("categorias")
+require("../models/Postagem")
+const Postagem = mongoose.model("postagens")
 
 router.get('/', (req, res) => {
    res.render("admin/index")
@@ -50,7 +54,7 @@ router.post('/categorias/nova', (req, res) => {
          req.flash("success_msg", "Categoria criada com sucesso")
          res.redirect("/admin/categorias")
       }).catch((err) => {
-         req.flash("error_msg", "Houve um erro ao criar a Categoria <br>"+err+"<br>Tente Novamente")
+         req.flash("error_msg", "Houve um erro ao criar a Categoria ->"+err)
          res.redirect("/admin")
       })
    }
@@ -75,7 +79,7 @@ router.post('/categorias/edit', (req, res) => {
          req.flash("success_msg", "Categoria editada com Sucesso")
          res.redirect("/admin/categorias")
       }).catch((err) => {
-         req.flash("error_msg", "Houve um erro ao salvar a categoria")
+         req.flash("error_msg", "Houve um erro ao salvar a categoria ->" + err)
          res.redirect("/admin/categorias")
       })
 
@@ -83,6 +87,60 @@ router.post('/categorias/edit', (req, res) => {
       req.flash("error_msg", "Houve um erro ao editar a categoria")
       res.redirect("/admin/categorias")
    })
+})
+
+router.get('/categorias/deletar/:id', (req, res) => {
+   Categoria.deleteOne({_id: req.params.id}).then(() => {
+      req.flash("success_msg", "Categoria excluida")
+      res.redirect("/admin/categorias")
+   }).catch((err) => {
+      req.flash("error_msg", "Houve um erro ao excluir a categoria ->" + err)
+      res.redirect("/admin/categorias")
+   })
+})
+
+router.get("/postagens", (req, res) => {
+   Postagem.find().populate("categoria").sort({date: 'DESC'}).then((postagens) => {
+      res.render("admin/postagens", {postagens: postagens})
+   }).catch((err) => {
+      req.flash("error_msg", "Houve um erro ao carregar as Postagens")
+      res.redirect("/admim")
+   })
+})
+
+router.get("/postagens/add", (req, res) => {
+   Categoria.find().sort({date: 'DESC'}).then((categorias) => {
+      res.render("admin/add_postagens", {categorias: categorias})
+   }).catch((err) => {
+      req.flash("error_msg", "Houve um erro ao criar uma nova Postagem -> " + err)
+      res.redirect("/admim/postagens")
+   })
+})
+
+router.post("/postagens/gravar", (req, res) => {
+   var erros = []
+   //tratamento de erros
+   if (req.body.categoria == "0") {
+      erros.push({ texto: "Nenhuma categoria foi encontrada, crie uma nova Categoria antes" })
+   }
+   if(erros.length > 0){
+      res.render("admin/postagens", {erros: erros})
+   }else{
+      const novaPostagem = {
+         titulo: req.body.titulo,
+         slug: req.body.slug,
+         descricao: req.body.descricao,
+         conteudo: req.body.conteudo,
+         categoria: req.body.categoria
+      }
+      new Postagem(novaPostagem).save().then(()=> {
+         req.flash("success_msg", "Postagem criada com sucesso")
+         res.redirect("/admin/postagens")
+      }).catch((err) => {
+         req.flash("error_msg", "Houve um erro ao criar a Postagem ->"+err)
+         res.redirect("/admin/postagens/add")
+      })
+   }
 })
 
 module.exports = router
