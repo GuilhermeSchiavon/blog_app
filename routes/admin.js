@@ -143,4 +143,49 @@ router.post("/postagens/gravar", (req, res) => {
    }
 })
 
+router.get('/postagens/edit/:id', (req, res) => {
+   Postagem.findOne({_id: req.params.id}).then((postagem) => {
+      Categoria.find().sort({date: 'DESC'}).then((categorias) => {
+         res.render("admin/edit_postagem", {postagem: postagem, categorias: categorias})
+      })
+   }).catch((err) => {
+      req.flash("error_msg", "Houve um erro, Postegem não existente")
+      res.redirect("/admin/postagens")
+   })
+})
+
+router.post('/postagens/gravar_edicao', (req, res) => {
+   Postagem.findOne({_id: req.body.id}).then((postagem) => {
+      postagem.titulo = req.body.titulo,
+      postagem.slug = req.body.slug,
+      postagem.descricao = req.body.descricao,
+      postagem.conteudo = req.body.conteudo,
+      postagem.categoria = req.body.categoria
+      postagem.date = new Date()
+      
+      postagem.save().then(() => {
+         req.flash("success_msg", "Postagem editada com Sucesso")
+         res.redirect("/admin/postagens")
+      }).catch((err) => {
+         req.flash("error_msg", "Houve um erro ao salvar a Postagem ->" + err)
+         res.redirect("/admin/postagens")
+      })
+
+   }).catch((err) => {
+      req.flash("error_msg", "Houve um erro ao editar a Postagem")
+      res.redirect("/admin/postagens")
+   })
+})
+
+router.get('/postagens/deletar/:id', (req, res) => {
+   //Postagem.remove({_id: req.params.id}).then(() => { //OBS: Outra forma de remover apagar todos os registros
+   Postagem.deleteOne({_id: req.params.id}).then(() => {
+      req.flash("success_msg", "Postagem excluida")
+      res.redirect("/admin/postagens")
+   }).catch((err) => {
+      req.flash("error_msg", "Houve um erro ao excluir a Postagem ->" + err)
+      res.redirect("/admin/postagens")
+   })
+})
+
 module.exports = router

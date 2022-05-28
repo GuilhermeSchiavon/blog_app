@@ -1,0 +1,32 @@
+{{#each erros}}
+   <div class="alert alert-danger">{{texto}}</div>
+{{else}}
+
+{{/each}}
+
+<h2>Nova Postagem</h2>
+<div class="card">
+   <div class="card-body">
+      <form action="/admin/postagens/gravar_edicao" method="POST">
+         <input type="hidden" name="id" value="{{ postagem.id }}" required>
+         <label for="nome">Titulo</label>
+            <input type="text" name="titulo" placeholder="Nome da postagem" class="form-control" value="{{ postagem.titulo }}" required>
+         <label for="nome">Slug</label>
+            <input type="text" name="slug" placeholder="Slug da postagem" class="form-control" value="{{ postagem.slug }}" required>
+         <label for="nome">Conteúdo</label>
+            <textarea type="text" name="conteudo" class="form-control" required> {{ postagem.conteudo }} </textarea>
+         <label for="nome">Descricao</label>
+            <input type="text" name="descricao" placeholder="Conteúdo da postagem" class="form-control" value="{{ postagem.descricao }}" required>
+         <label for="nome">Categoria</label>
+            <select class="form-select" name="categoria">
+               {{#each categorias}}
+                  <option class="form-select"  value="{{_id}}">{{nome}}</option>
+               {{else}}
+                  <option class="form-select" {{!-- {{#if postagem.categoria == categorias.id 'selected' /if}} --}} value="0">Nehuma Categoria registrada</option>
+               {{/each}}
+            </select>
+            <br>
+         <button type="submit" class="btn btn-primary">Editar Postagem</button>
+      </form>
+   </div>
+</div>
