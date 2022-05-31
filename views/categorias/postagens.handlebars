@@ -1,0 +1,21 @@
+<h2>{{categoria.nome}}</h2>
+
+{{#each postagens}}
+<div class="card mt-4 d-flex">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h4>{{titulo}}</h4>
+            <a href="/postagem/{{slug}}" <button class="btn btn-success">Leia mais</button></a>
+        </div>
+        <small>{{descricao}}</small>
+  
+        <hr>
+        <div class="d-flex justify-content-between">
+            <small>Categoria {{categoria.nome}}</small>
+            <small>Data de Modificação: {{date}}</small>
+        </div>
+    </div>
+</div>
+{{else}}
+<p class="mt-3"> Nenhuma Postagem encontrada da categoria {{categoria.nome}}!</p>
+{{/each}}
