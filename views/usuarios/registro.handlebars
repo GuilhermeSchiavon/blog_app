@@ -1,31 +1,42 @@
 {{#each erros}}
 <div class="alert alert-danger">
-   {{texto}}
+  {{texto}}
 </div>
 {{else}}
 
 {{/each}}
 
-<div class="card text-left">
-  <div class="card-body">
-    <h4 class="card-title">Cadastro</h4>
-    <form action="/user/registro" method="post">
-      <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+<section class="vh-90 gradient-custom">
+  <div class="container py-5 h-90">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card  text-white" style="border-radius: 1rem; background:  #6c757d">
+          <div class="card-body p-5 ">
+            <h2 class="fw-bold mb-2 text-uppercase text-center mb-5">Cadastro</h4>
+            <form action="/user/registro" method="post" class="">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+              </div>
+              <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
+              </div>
+              <div class="form-group">
+                <label for="senha">Confirmar Senha</label>
+                <input type="password" class="form-control" id="senhaConfirme" name="senhaConfirme" placeholder="Senha"
+                  required>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-outline-light btn-lg px-5 mt-5 text-center" type="submit">Cadastrar</button>
+              </div>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-      </div>
-      <div class="form-group">
-        <label for="senha">Senha</label>
-        <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
-      </div>
-      <div class="form-group">
-        <label for="senha">Confirmar Senha</label>
-        <input type="password" class="form-control" id="senhaConfirme" name="senhaConfirme" placeholder="Senha" required>
-      </div>
-      <button type="submit" class="btn btn-primary mt-5">Cadastrar</button>
+    </div>
   </div>
-</div>
+</section>

@@ -2,13 +2,17 @@
     <h1 class="display-4">Bem vindo ao Blog</h1>
     <p class="lead">Este é um BLOG simpres, desenvolvido com em Node.js + Espress + MongoDB.</p>
     <hr class="my-4">
-    <p>Aqui você vai poder ler sobre as novidades do mundo da camputação.</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Crie sua conta</a>
-    </p>
+    <p>Aqui você vai poder ler sobre as novidades de diversos assuntos.</p>
+    {{#if user}}
+    
+    {{else}}
+        <p class="lead">
+            <a class="btn btn-dark btn-lg" href="#" role="button">+ Crie sua conta</a>
+        </p>
+    {{/if}}
 </div>
 
-<h4>Ultimos Recentes</h4>
+<h4 class="mt-4">Ultimos Recentes</h4>
 
 {{#each postagens}}
 <div class="card mt-4 d-flex">
