@@ -20,6 +20,7 @@
    //Model de Autenticação - Passport
    const passport = require("passport")
    require("./config/auth")(passport)
+   const db = require("./config/db")
    
 // Configurações
    //Sessão
@@ -57,7 +58,7 @@
       app.set('view engine', 'handlebars');
 
     //Mongoose
-      mongoose.connect("mongodb://localhost/blogapp",{
+      mongoose.connect(db.mongoURI,{
          useNewUrlParser: true
       }).then(()=>{
          console.log("Conectado ao mongo")
@@ -125,7 +126,7 @@
    app.use('/user', user)
 
 // Outros
-const PORT = 8088
+const PORT = process.env.PORT || 8088
 app.listen(PORT,() => {
    console.log("Servidor Online: Port8088")
 })

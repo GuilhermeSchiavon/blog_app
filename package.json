@@ -1,4 +1,8 @@
 {
+  "name": "blog_app",
+  "description": "- Framework Express instalado no projeto\r    Terminal: npm install express --save",
+  "version": "1.0.0",
+  "main": "app.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
@@ -12,5 +16,20 @@
     "passport-local": "^1.0.0",
     "to": "^0.2.9",
     "update": "^0.7.4"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuilhermeSchiavon/blog_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuilhermeSchiavon/blog_app/issues"
+  },
+  "homepage": "https://github.com/GuilhermeSchiavon/blog_app#readme"
 }
